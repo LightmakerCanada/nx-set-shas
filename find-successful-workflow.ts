@@ -273,17 +273,24 @@ async function commitExists(
       commit_sha: commitSha,
     });
 
-    // Check the commit exists on the expected main branch (it will not in the case of a rebased main branch)
-    const commits = await octokit.request('GET /repos/{owner}/{repo}/commits', {
-      owner,
-      repo,
-      sha: branchName,
-      per_page: 100,
-    });
+    if (branchName !== '') {
+      // Check the commit exists on the expected main branch (it will not in the case of a rebased main branch)
+      const commits = await octokit.request(
+        'GET /repos/{owner}/{repo}/commits',
+        {
+          owner,
+          repo,
+          sha: branchName,
+          per_page: 100,
+        },
+      );
 
-    return commits.data.some(
-      (commit: { sha: string }) => commit.sha === commitSha,
-    );
+      return commits.data.some(
+        (commit: { sha: string }) => commit.sha === commitSha,
+      );
+    }
+
+    return true;
   } catch {
     return false;
   }

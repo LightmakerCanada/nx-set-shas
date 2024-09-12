@@ -38065,14 +38065,17 @@ function commitExists(octokit, branchName, commitSha) {
                 repo,
                 commit_sha: commitSha,
             });
-            // Check the commit exists on the expected main branch (it will not in the case of a rebased main branch)
-            const commits = yield octokit.request('GET /repos/{owner}/{repo}/commits', {
-                owner,
-                repo,
-                sha: branchName,
-                per_page: 100,
-            });
-            return commits.data.some((commit) => commit.sha === commitSha);
+            if (branchName !== '') {
+                // Check the commit exists on the expected main branch (it will not in the case of a rebased main branch)
+                const commits = yield octokit.request('GET /repos/{owner}/{repo}/commits', {
+                    owner,
+                    repo,
+                    sha: branchName,
+                    per_page: 100,
+                });
+                return commits.data.some((commit) => commit.sha === commitSha);
+            }
+            return true;
         }
         catch (_a) {
             return false;
