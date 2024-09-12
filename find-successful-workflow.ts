@@ -195,6 +195,7 @@ async function findSuccessfulCommit(
         workflow_id,
         event: lastSuccessfulEvent,
         status: 'success',
+        per_page: 100,
       },
     )
     .then(({ data: { workflow_runs } }) =>

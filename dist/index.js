@@ -38002,6 +38002,7 @@ function findSuccessfulCommit(workflow_id, run_id, owner, repo, branch, lastSucc
             workflow_id,
             event: lastSuccessfulEvent,
             status: 'success',
+            per_page: 100,
         })
             .then(({ data: { workflow_runs } }) => workflow_runs.map((run) => run.head_sha));
         return yield findExistingCommit(octokit, branch, shas);
