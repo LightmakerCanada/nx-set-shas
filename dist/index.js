@@ -37995,7 +37995,7 @@ function findSuccessfulCommit(workflow_id, run_id, owner, repo, branch, lastSucc
             owner,
             repo,
             // on some workflow runs we do not have branch property
-            branch: lastSuccessfulEvent === 'push' ||
+            branch: (lastSuccessfulEvent === 'push' && branch !== '') ||
                 lastSuccessfulEvent === 'workflow_dispatch'
                 ? branch
                 : undefined,

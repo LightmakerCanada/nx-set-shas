@@ -188,7 +188,7 @@ async function findSuccessfulCommit(
         repo,
         // on some workflow runs we do not have branch property
         branch:
-          lastSuccessfulEvent === 'push' ||
+          (lastSuccessfulEvent === 'push' && branch !== '') ||
           lastSuccessfulEvent === 'workflow_dispatch'
             ? branch
             : undefined,
